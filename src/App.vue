@@ -1,6 +1,8 @@
 <template>
   <div id="app">
-    <div class="title"></div>
+    <div class="title">
+      <el-button icon="el-icon-search" circle></el-button>
+    </div>
     <div class="main">
       <div class="name">
       </div>
