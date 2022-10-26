@@ -1,8 +1,8 @@
 import request from "./base";
+import { Res } from './types';
 
-interface Res {
-  error: any
-  data: any
+function getBlogList(): Promise<Res> {
+  return request.get(`/blog`);
 }
 
 function getOneBlog(id: string): Promise<Res>{
@@ -14,6 +14,7 @@ function saveOneBlog(params: any): Promise<Res> {
 }
 
 export {
+  getBlogList,
   getOneBlog,
   saveOneBlog,
 }
