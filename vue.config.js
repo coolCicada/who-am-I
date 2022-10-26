@@ -1,7 +1,8 @@
 // vue.config.js
 module.exports = {
   chainWebpack: (config) => {
-      if (process.env.NODE_ENV == 'development') {
+      console.log('process.env.NODE_ENV:', process.env.NODE_ENV);
+      if (process.env.NODE_ENV == 'analyzer') {
           /**
            * 分析器，可以查看打包之后的效果
            * npm run build:analyzer

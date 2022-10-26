@@ -7,7 +7,7 @@
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "tar": "npm run build && tar -czvf 2.tar.gz --exclude=node_modules --exclude=.git ./dist/**",
-    "build:analyzer":"vue-cli-service build --mode development"
+    "build:analyzer": "vue-cli-service build --mode analyzer"
   },
   "dependencies": {
     "axios": "^1.1.3",
