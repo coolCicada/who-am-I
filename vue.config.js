@@ -1,6 +1,9 @@
 // vue.config.js
 module.exports = {
   chainWebpack: (config) => {
+      config.plugins.delete('prefetch');
+      config.plugins.delete('preload')
+
       console.log('process.env.NODE_ENV:', process.env.NODE_ENV);
       if (process.env.NODE_ENV == 'analyzer') {
           /**
