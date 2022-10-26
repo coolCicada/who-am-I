@@ -4,7 +4,7 @@
     @scroll="scrollM"
     class="scroll-load"
   >
-    <slot name="content"></slot>
+    <slot></slot>
     <div
       v-if="loadOver"
       class="loaded"
@@ -16,7 +16,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { throttle } from 'lodash-es';
+import { debounce } from 'lodash-es';
 
 interface Props {
   loadOver: boolean
@@ -30,19 +30,25 @@ const emit = defineEmits(['load'])
 
 const scrollContent: any = ref(null);
 
-const scrollM = throttle(() => {
+const scrollM = debounce(() => {
   const scrollTop = scrollContent.value.scrollTop;
   const clientHight = scrollContent.value.clientHeight;
   const scrollHeight = scrollContent.value.scrollHeight;
-  if (scrollHeight - scrollTop - clientHight < 100 && !props.loadOver) {
+  if (scrollHeight - scrollTop - clientHight < 50 && !props.loadOver) {
     emit('load');
   }
-});
+}, 500);
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .scroll-load {
   overflow-y: auto;
   height: 100%;
+  .loaded {
+    height: 50px;
+    text-align: center;
+    color: grey;
+  }
 }
+
 </style>

@@ -4,10 +4,10 @@ import VueRouter from 'vue-router';
 Vue.use(VueRouter);
 
 const routes = [
-  { path: '/', component: () => import('./pages/Main.vue'/* webpackChunkName: "main" */)},
-  { path: '/blogList', component: () => import('./pages/BlogList.vue'/* webpackChunkName: "blog-list" */)},
-  { path: '/blogDetail/:id', component: () => import('./pages/BlogDetail.vue'/* webpackChunkName: "blog-detail" */)},
-  { path: '/blogUpdate/:id', component: () => import('./pages/BlogUpdate.vue'/* webpackChunkName: "blog-update" */)},
+  { name: 'Main', path: '/', component: () => import('./pages/Main.vue'/* webpackChunkName: "main" */)},
+  { name: 'BlogList', path: '/blogList', component: () => import('./pages/BlogList.vue'/* webpackChunkName: "blog-list" */)},
+  { name: 'BlogDetail', path: '/blogDetail/:id', component: () => import('./pages/BlogDetail.vue'/* webpackChunkName: "blog-detail" */)},
+  { name: 'BlogUpdate', path: '/blogUpdate/:id', component: () => import('./pages/BlogUpdate.vue'/* webpackChunkName: "blog-update" */)},
   { path: '*', redirect: { path: '/'}},
 ];
 

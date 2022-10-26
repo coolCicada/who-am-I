@@ -1,8 +1,8 @@
 import request from "./base";
 import { Res } from './types';
 
-function getBlogList(): Promise<Res> {
-  return request.get(`/blog`);
+function getBlogList(params: any): Promise<Res> {
+  return request.get(`/blog`, { params });
 }
 
 function getOneBlog(id: string): Promise<Res>{
