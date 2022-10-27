@@ -6,18 +6,25 @@
         <img src="@/assets/WechatIMG125.jpeg" alt="">
       </div>
       <div class="info">
-        <div class="title">社交主页</div>
+        <h2 class="title">社交主页</h2>
         <ul>
           <li>
-            <a target="_blank" href="https://juejin.cn/user/835284566556014"><img src="@/assets/juejin.png" alt=""></a>
+            <a target="_blank" href="https://juejin.cn/user/835284566556014">掘金</a>
           </li>
           <li>
-            <a target="_blank" href="https://leetcode.cn/u/lcls/"><img src="@/assets/liko.png" alt=""></a>
+            <a target="_blank" href="https://github.com/coolCicada">github</a>
           </li>
           <li>
-            <a target="_blank" href="https://github.com/coolCicada"><img src="@/assets/github.png" alt=""></a>
+            <a target="_blank" href="https://leetcode.cn/u/lcls/">leetcode</a>
+          </li>
+          <li>
+            <a target="_blank" href="http://www.lssl.work/">知识共建网站</a>
+          </li>
+          <li>
+            <a target="_blank" href="https://www.npmjs.com/~coolcicada">npm</a>
           </li>
         </ul>
+        <h2 class="title">文章列表</h2>
         <BlogList />
         <Footer />
       </div>
@@ -30,7 +37,7 @@ import BlogList from '@/pages/BlogList.vue'
 import Footer from '@/components/Footer.vue';
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 html, body {
   margin: 0;
   padding: 0;
@@ -68,7 +75,6 @@ html, body {
 
     .info {
       .title {
-        margin: 20px auto;
         text-align: center;
       }
 
@@ -77,12 +83,13 @@ html, body {
         justify-content: center;
         flex-wrap: wrap;
         li {
-          width: 100px;
+          width: 200px;
           height: 100px;
           display: flex;
           flex-direction: column;
           justify-content: center;
           margin: 0 20px;
+          text-align: center;
 
           img {
             width: 100%;
