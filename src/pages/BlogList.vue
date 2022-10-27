@@ -1,25 +1,29 @@
 <template>
   <div class="blog-list">
-    <ScrollLoad @load="load" :load-over="loadOver">
-      <div
-        v-for="item in list"
-        :key="item.id"
-        @click="toDetail(item.id)"
-        class="article"
-      > 
-        <Button
-          style="position: absolute; right: 0; bottom: 0;"
-          type="text"
-          @click="toEdit(item.id)"
-        >
-          编辑
-        </Button>
-        <div class="title">{{ item.title ? item.title : '省略' }}</div>
-        <div class="content">
-          {{ item.desc }}
+    <slot name="header"></slot>
+    <div class="scroll-container">
+      <ScrollLoad @load="load" :load-over="loadOver">
+        <div
+          v-for="item in list"
+          :key="item.id"
+          @click="toDetail(item.id)"
+          class="article"
+        > 
+          <Button
+            style="position: absolute; right: 0; bottom: 0;"
+            type="text"
+            @click="toEdit(item.id)"
+          >
+            编辑
+          </Button>
+          <div class="title">{{ item.title ? item.title : '省略' }}</div>
+          <div class="content">
+            {{ item.desc }}
+          </div>
         </div>
-      </div>
-    </ScrollLoad>
+      </ScrollLoad>
+    </div>
+    <slot name="footer"></slot>
   </div>
 </template>
 
@@ -80,18 +84,23 @@ function toEdit(id: string) {
 
 <style lang="scss" scoped>
 .blog-list {
-  height: 100vh;
-  .article {
-    position: relative;
-    border-bottom: 1px solid gainsboro;
-    margin: 20px auto;
-    box-sizing: border-box;
-    padding: 20px;
-    .title {
-      font-size: 2em;
-      margin-bottom: 20px;
+  height: 100%;
+  display: flex;
+  .scroll-container {
+    flex: 1;
+    .article {
+      position: relative;
+      border-bottom: 1px solid gainsboro;
+      margin: 20px auto;
+      box-sizing: border-box;
+      padding: 20px;
+      .title {
+        font-size: 2em;
+        margin-bottom: 20px;
+      }
     }
   }
+  
   @media screen and (max-width:500px) {
     .article {
       width: 100%;
