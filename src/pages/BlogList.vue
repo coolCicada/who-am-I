@@ -1,6 +1,5 @@
 <template>
   <div class="blog-list">
-    <slot name="header"></slot>
     <div class="scroll-container">
       <ScrollLoad @load="load" :load-over="loadOver">
         <div
@@ -23,7 +22,6 @@
         </div>
       </ScrollLoad>
     </div>
-    <slot name="footer"></slot>
   </div>
 </template>
 
@@ -84,7 +82,6 @@ function toEdit(id: string) {
 
 <style lang="scss" scoped>
 .blog-list {
-  height: 100%;
   display: flex;
   .scroll-container {
     flex: 1;
