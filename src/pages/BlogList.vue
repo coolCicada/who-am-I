@@ -46,6 +46,9 @@ async function getList() {
     pageNum += 1;
     total = data.total;
     list.value.push(...data.list);
+    if (list.value.length >= total) {
+      loadOver.value = true;
+    }
   }
 }
 
@@ -54,10 +57,7 @@ getList();
 let loadOver = ref(false);
 
 async function load() {
-  if (list.value.length >= total) {
-    loadOver.value = true;
-    return;
-  }
+  if(loadOver.value) return;
   await getList();
 }
 
@@ -87,7 +87,7 @@ function toEdit(id: string) {
     flex: 1;
     .article {
       position: relative;
-      border-bottom: 1px solid gainsboro;
+      border-top: 1px solid gainsboro;
       margin: 20px auto;
       box-sizing: border-box;
       padding: 20px;
