@@ -18,11 +18,8 @@
             <a target="_blank" href="https://github.com/coolCicada"><img src="@/assets/github.png" alt=""></a>
           </li>
         </ul>
-        <BlogList>
-          <template #footer>
-            <Footer />
-          </template>
-        </BlogList>
+        <BlogList />
+        <Footer />
       </div>
     </div>
   </div>
