@@ -17,8 +17,6 @@
 <style lang="scss" scoped>
 .footer {
     height: 200px;
-    position: absolute;
-    bottom: 0;
     background: black;
     width: 100%;
 
