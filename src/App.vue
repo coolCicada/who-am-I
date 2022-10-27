@@ -12,4 +12,9 @@ body, html, ul {
   padding: 0;
 }
 
+body, html {
+  height: 100vh;
+  overflow: auto;
+}
+
 </style>
