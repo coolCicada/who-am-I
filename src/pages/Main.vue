@@ -18,22 +18,19 @@
             <a target="_blank" href="https://github.com/coolCicada"><img src="@/assets/github.png" alt=""></a>
           </li>
         </ul>
+        <BlogList>
+          <template #footer>
+            <Footer />
+          </template>
+        </BlogList>
       </div>
-    </div>
-    <div class="footer">
-      <a
-        class="sign"
-        target="_blank"
-        href="https://beian.miit.gov.cn/"
-      >
-          京ICP备19043673号-2
-      </a>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-
+import BlogList from '@/pages/BlogList.vue'
+import Footer from '@/components/Footer.vue';
 </script>
 
 <style lang="scss">
@@ -46,8 +43,6 @@ html, body {
 #app {
   box-sizing: border-box;
   min-height: 100vh;
-  padding-bottom: 200px;
-  height: 100%;
   position: relative;
   .header {
     height: 20px;
@@ -97,24 +92,6 @@ html, body {
           }
         }
       }
-    }
-  }
-  .footer {
-    height: 200px;
-    position: absolute;
-    bottom: 0;
-    background: black;
-    width: 100%;
-
-    .sign {
-      position: absolute;
-      bottom: 0px;
-      left: 0px;
-      right: 0px;
-      text-align: center;
-      font-size: 1em;
-      text-decoration: none;
-      color: whitesmoke;
     }
   }
 }
