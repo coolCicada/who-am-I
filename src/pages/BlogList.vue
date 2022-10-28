@@ -9,19 +9,22 @@
         <div
           v-for="item in list"
           :key="item.id"
-          @click="toDetail(item.id)"
           class="article"
-        > 
-          <Button
-            style="position: absolute; right: 0; bottom: 0;"
-            type="text"
-            @click="toEdit(item.id)"
-          >
-            编辑
-          </Button>
+        >
           <div class="title">{{ item.title ? item.title : '省略' }}</div>
-          <div class="content">
+          <div
+            class="content" 
+            @click="toDetail(item.id)"
+          >
             {{ item.desc }}
+          </div>
+          <div class="operators">
+            <Button
+              type="text"
+              @click="toEdit(item.id)"
+            >
+              编辑
+            </Button>
           </div>
         </div>
       </ScrollLoad>
@@ -103,6 +106,13 @@ function toEdit(id: string) {
       .title {
         font-size: 2em;
         margin-bottom: 20px;
+      }
+
+      .operators {
+        height: 20;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
       }
     }
   }
