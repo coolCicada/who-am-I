@@ -1,7 +1,11 @@
 <template>
   <div class="blog-list">
     <div class="scroll-container">
-      <ScrollLoad @load="load" :load-over="loadOver">
+      <ScrollLoad
+        @load="load" 
+        :load-over="loadOver"
+        :loading="loading"
+      >
         <div
           v-for="item in list"
           :key="item.id"
@@ -35,20 +39,25 @@ import { useRouter } from '@/utils/vueApi';
 const router = useRouter();
 
 let list = ref([]) as any;
-
+let loading = ref(false);
 let total = 0;
 let pageNum = 1;
 let pageSize = 10;
 
 async function getList() {
-  const { data, error } = await getBlogList({ pageNum, pageSize });
-  if(!error && data) {
-    pageNum += 1;
-    total = data.total;
-    list.value.push(...data.list);
-    if (list.value.length >= total) {
-      loadOver.value = true;
+  loading.value = true;
+  try {
+    const { data, error } = await getBlogList({ pageNum, pageSize });
+    if(!error && data) {
+      pageNum += 1;
+      total = data.total;
+      list.value.push(...data.list);
+      if (list.value.length >= total) {
+        loadOver.value = true;
+      }
     }
+  } finally {
+    loading.value = false;
   }
 }
 
@@ -57,7 +66,7 @@ getList();
 let loadOver = ref(false);
 
 async function load() {
-  if(loadOver.value) return;
+  if(loadOver.value || loading.value) return;
   await getList();
 }
 

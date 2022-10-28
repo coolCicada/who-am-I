@@ -1,11 +1,9 @@
 <template>
   <div class="scroll-load">
     <slot></slot>
-    <div
-      v-if="loadOver"
-      class="loaded"
-    >
-      <span>加载完毕</span>
+    <div class="loaded">
+      <span v-if="loadOver">加载完毕</span>
+      <span v-if="loading">加载中...</span>
     </div>
   </div>
 </template>
@@ -15,10 +13,12 @@ import { debounce } from 'lodash-es';
 
 interface Props {
   loadOver: boolean
+  loading: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
   loadOver: false,
+  loading: false,
 });
 
 const emit = defineEmits(['load'])
@@ -31,7 +31,7 @@ document.body.addEventListener('scroll', debounce(({ target }) => {
   if (scrollHeight - scrollTop - clientHight < 300 && !props.loadOver) {
     emit('load');
   }
-}, 500), true);
+}, 200), true);
 
 </script>
 
