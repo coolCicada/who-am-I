@@ -24,7 +24,9 @@
             <a target="_blank" href="https://www.npmjs.com/~coolcicada">npm</a>
           </li>
         </ul>
-        <h2 class="title">文章列表</h2>
+        <h2 class="title">
+          文章列表
+        </h2>
         <BlogList />
         <Footer />
       </div>
@@ -81,7 +83,9 @@ html, body {
 
     .info {
       .title {
-        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
 
       ul {

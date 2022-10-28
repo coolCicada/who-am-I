@@ -1,18 +1,31 @@
 <template>
   <div class="update-container">
     <div class="header">
-      <Button @click="save" type="primary" size="small">{{ id ? '更新' : '保存'  }}</Button>
+      <Button @click="beforeSave" type="primary" size="small">{{ id ? '更新' : '保存'  }}</Button>
     </div>
     <article class="editor markdown-body">
       <textarea
         ref="mytextarea"
         class="input"
-        :value="input"
+        :value="input.content"
         @input="update"
         @keydown="tabFunc"
       ></textarea>
       <div v-highlight class="output" v-html="output"></div>
     </article>
+    <Dialog title="文章信息" :visible.sync="dialogTableVisible">
+      <Form :rules="rules" ref="formRef" :model="input" label-width="80px">
+        <FormItem prop="title" label="标题">
+          <Input v-model="input.title"></Input>
+        </FormItem>
+        <FormItem prop="desc" label="简介">
+          <Input type="textarea" v-model="input.desc"></Input>
+        </FormItem>
+      </Form>
+      <template #footer>
+        <Button @click="save">确认</Button>
+      </template>
+    </Dialog>
   </div>
 </template>
 
@@ -20,20 +33,26 @@
 import { marked } from 'marked'
 import { debounce } from 'lodash-es'
 import { ref, computed } from 'vue'
-import { Button, Message } from 'element-ui';
+import { Button, Message, Form, Input, FormItem, Dialog } from 'element-ui';
 import { useRoute } from '@/utils/vueApi';
 import { getOneBlog, saveOneBlog } from '@/api/blog';
 
-const input = ref('# 第一部分')
+const dialogTableVisible = ref(false);
 
-const output = computed(() => marked(input.value))
+const input = ref({
+  content: '# 内容',
+  title: '',
+  desc: ''
+});
+
+const output = computed(() => marked(input.value.content))
 
 const id = ref(useRoute().params.id);
 
 async function getBolgDetail() {
   const { data, error } = await getOneBlog(id.value);
   if (!error && data) {
-    input.value = data.content;
+    input.value = data;
   }
 }
 
@@ -42,11 +61,34 @@ if (id.value !== undefined && id.value !== null) {
 }
 
 const update = debounce((e) => {
-  input.value = e.target.value
+  input.value.content = e.target.value
 }, 100)
 
+function beforeSave() {
+  dialogTableVisible.value = true;
+}
+
+const rules = {
+  title: [
+    { required: true, trigger: ['blur', 'change'] }
+  ],
+  desc: [
+    { required: true, trigger: ['blur', 'change'] }
+  ]
+}
+const formRef = ref(null) as any;
+function validate() {
+  return new Promise<void>((resolve, reject) => {
+    formRef.value.validate((valid: boolean) => {
+      if (valid) resolve();
+      reject();
+    });
+  })
+}
+
 async function save() {
-  const { error, data } = await saveOneBlog({ content: input.value });
+  await validate();
+  const { error, data } = await saveOneBlog({ id: id.value, ...input.value });
   if (!error && data) {
     Message({ type: 'success', message: '保存成功' });
   }
@@ -90,6 +132,7 @@ function tabFunc(e: any) {
   flex: 1;
   display: flex;
   overflow-y: auto;
+  border-top: 1px solid gainsboro;
 }
 
 .input,

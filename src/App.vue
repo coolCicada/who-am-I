@@ -1,5 +1,6 @@
 <template>
   <div>
+    <el-button @click="add" style="position: fixed; top: 20px; right: 20px; z-index: 999;" type="success" icon="el-icon-plus" circle></el-button>
     <KeepAlive :include="keepList">
       <router-view v-if="$route.meta && $route.meta.keepAlive"></router-view>
     </KeepAlive>
@@ -8,10 +9,20 @@
 </template>
 
 <script lang="ts">
+import { Button } from 'element-ui';
+import { useRouter } from '@/utils/vueApi';
+
 export default {
+  components: {
+    [Button.name]: Button,
+  },
   setup() {
     const keepList: string[] = ['Main'];
-    return { keepList };
+    const router = useRouter();
+    const add = () => {
+      router.push({ name: 'BlogAdd' })
+    }
+    return { keepList, add };
   }
 }
 </script>
