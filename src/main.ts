@@ -18,7 +18,7 @@ Vue.directive('highlight', {
     }
   },
   update(el) {
-    (window as any).highlightDom(el);
+    (window as any).highlightDom && (window as any).highlightDom(el);
   }
 })
 

@@ -4,7 +4,13 @@
       <Button @click="save" type="primary" size="small">保存</Button>
     </div>
     <article class="editor markdown-body">
-      <textarea class="input" :value="input" @input="update"></textarea>
+      <textarea
+        ref="mytextarea"
+        class="input"
+        :value="input"
+        @input="update"
+        @keydown="tabFunc"
+      ></textarea>
       <div v-highlight class="output" v-html="output"></div>
     </article>
   </div>
@@ -42,6 +48,25 @@ async function save() {
   if (!error && data) {
     Message({ type: 'success', message: '保存成功' });
   }
+}
+
+const mytextarea = ref(null) as any;
+
+function tabFunc(e: any) {
+  const dom = e.target;
+  if(e.keyCode == 9) {
+    e.preventDefault();
+    const startPos = dom.selectionStart;
+    const endPos = dom.selectionEnd;
+    if (startPos === undefined || endPos === undefined) return
+    const  txt = dom.value;
+    const  result = txt.substring(0, startPos) + '  ' + txt.substring(endPos)
+    dom.value = result;
+    dom.focus();
+    dom.selectionStart = startPos + '  '.length;
+    dom.selectionEnd = startPos + '  '.length;
+  }
+  
 }
 </script>
 
