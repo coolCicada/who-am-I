@@ -1,9 +1,19 @@
 <template>
-  <router-view></router-view>
+  <div>
+    <KeepAlive :include="keepList">
+      <router-view v-if="$route.meta && $route.meta.keepAlive"></router-view>
+    </KeepAlive>
+    <router-view v-if="!$route.meta || !$route.meta.keepAlive"></router-view>
+  </div>
 </template>
 
-<script setup lang="ts">
-
+<script lang="ts">
+export default {
+  setup() {
+    const keepList: string[] = ['Main'];
+    return { keepList };
+  }
+}
 </script>
 
 <style>

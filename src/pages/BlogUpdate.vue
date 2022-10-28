@@ -1,7 +1,7 @@
 <template>
   <div class="update-container">
     <div class="header">
-      <Button @click="save" type="primary" size="small">保存</Button>
+      <Button @click="save" type="primary" size="small">{{ id ? '更新' : '保存'  }}</Button>
     </div>
     <article class="editor markdown-body">
       <textarea
@@ -24,7 +24,7 @@ import { Button, Message } from 'element-ui';
 import { useRoute } from '@/utils/vueApi';
 import { getOneBlog, saveOneBlog } from '@/api/blog';
 
-const input = ref('# 标题')
+const input = ref('# 第一部分')
 
 const output = computed(() => marked(input.value))
 
@@ -37,14 +37,16 @@ async function getBolgDetail() {
   }
 }
 
-getBolgDetail();
+if (id.value !== undefined && id.value !== null) {
+  getBolgDetail();
+}
 
 const update = debounce((e) => {
   input.value = e.target.value
 }, 100)
 
 async function save() {
-  const { error, data } = await saveOneBlog({ id: id.value, content: input.value });
+  const { error, data } = await saveOneBlog({ content: input.value });
   if (!error && data) {
     Message({ type: 'success', message: '保存成功' });
   }
@@ -66,7 +68,6 @@ function tabFunc(e: any) {
     dom.selectionStart = startPos + '  '.length;
     dom.selectionEnd = startPos + '  '.length;
   }
-  
 }
 </script>
 

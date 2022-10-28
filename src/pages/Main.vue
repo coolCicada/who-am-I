@@ -33,8 +33,14 @@
 </template>
 
 <script setup lang="ts">
+import { onActivated } from 'vue';
 import BlogList from '@/pages/BlogList.vue'
 import Footer from '@/components/Footer.vue';
+
+onActivated(() => {
+  document.body.scrollTop = Number(localStorage.getItem('scrollTop'));
+})
+
 </script>
 
 <style lang="scss" scoped>
@@ -84,15 +90,15 @@ html, body {
         flex-wrap: wrap;
         li {
           width: 200px;
-          height: 100px;
+          height: 80px;
           display: flex;
           flex-direction: column;
           justify-content: center;
           margin: 0 20px;
           text-align: center;
 
-          img {
-            width: 100%;
+          a {
+            text-decoration: none;
           }
         }
       }

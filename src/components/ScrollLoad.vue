@@ -24,10 +24,13 @@ const props = withDefaults(defineProps<Props>(), {
 const emit = defineEmits(['load'])
 
 document.body.addEventListener('scroll', debounce(({ target }) => {
+  if (document.body.scrollTop !== 0) {
+    console.log('update localStorage', document.body.scrollTop)
+    localStorage.setItem('scrollTop', document.body.scrollTop + '');
+  }
   const scrollTop = target.scrollTop;
   const clientHight = target.clientHeight;
   const scrollHeight = target.scrollHeight;
-  console.log(scrollTop, clientHight, scrollHeight)
   if (scrollHeight - scrollTop - clientHight < 300 && !props.loadOver) {
     emit('load');
   }
