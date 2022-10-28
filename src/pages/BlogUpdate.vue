@@ -5,7 +5,7 @@
     </div>
     <article class="editor markdown-body">
       <textarea class="input" :value="input" @input="update"></textarea>
-      <div class="output" v-html="output"></div>
+      <div v-highlight class="output" v-html="output"></div>
     </article>
   </div>
 </template>
