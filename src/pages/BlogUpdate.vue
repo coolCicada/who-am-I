@@ -1,7 +1,8 @@
 <template>
   <div class="update-container">
     <div class="header">
-      <Button @click="beforeSave" type="primary" size="small">{{ id ? '更新' : '保存'  }}</Button>
+      <input v-model="input.title" placeholder="请输入标题..." class="my-input" type="text">
+      <Button class="my-button" @click="beforeSave" type="primary" size="small">{{ id ? '更新' : '发布'  }}</Button>
     </div>
     <article class="editor markdown-body">
       <textarea
@@ -37,7 +38,7 @@ import { Button, Message, Form, Input, FormItem, Dialog } from 'element-ui';
 import { useRoute } from '@/utils/vueApi';
 import { getOneBlog, saveOneBlog } from '@/api/blog';
 
-const dialogTableVisible = ref(false);
+let dialogTableVisible = ref(false);
 
 const input = ref({
   content: '# 内容',
@@ -88,9 +89,13 @@ function validate() {
 
 async function save() {
   await validate();
-  const { error, data } = await saveOneBlog({ id: id.value, ...input.value });
-  if (!error && data) {
-    Message({ type: 'success', message: '保存成功' });
+  try {
+    const { error, data } = await saveOneBlog({ id: id.value, ...input.value });
+    if (!error && data) {
+      Message({ type: 'success', message: '保存成功' });
+    }
+  } finally {
+    dialogTableVisible.value = false;
   }
 }
 
@@ -119,13 +124,25 @@ function tabFunc(e: any) {
   display: flex;
   flex-direction: column;
   .header {
-    display: flex;
-    align-items: center;
-    padding: 0 20px;
-    flex-shrink: 0;
-    height: 49px;
-    background-color:aliceblue;
+    height: 60px;
     border-bottom: 1px solid #ccc;
+    position: relative;
+    .my-input {
+      height: 60px;
+      outline: none;
+      border: none;
+      padding: 0 10px;
+      font-size: 2em;
+    }
+    .my-button {
+      height: 35px;
+      position: absolute;
+      right: 70px;
+      top: 0;
+      bottom: 0;
+      margin: auto 0;
+
+    }
   }
 }
 .editor {
@@ -153,6 +170,15 @@ function tabFunc(e: any) {
   font-size: 14px;
   font-family: 'Monaco', courier, monospace;
   padding: 20px;
+}
+
+@media screen and (max-width:800px) {
+  .input {
+    width: 100%;
+  }
+  .output {
+    display: none;
+  }
 }
 
 code {
