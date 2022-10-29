@@ -1,5 +1,6 @@
 <template>
   <div class="markdown-body">
+    <h1 style="text-align: center;">{{ model.title }}</h1>
     <div v-highlight class="output" v-html="output"></div>
   </div>
 </template>
@@ -10,14 +11,15 @@ import { marked } from 'marked'
 import { getOneBlog } from '@/api/blog';
 import { useRoute } from '@/utils/vueApi';
 const id = ref(useRoute().params.id);
-const input = ref('');
 
-const output = computed(() => marked(input.value))
+const model = ref({ content: '' }) as any;
+
+const output = computed(() => marked(model.value.content))
 
 async function getBolgDetail() {
   const { data, error } = await getOneBlog(id.value);
   if (!error && data) {
-    input.value = data.content;
+    model.value = data;
   }
 }
 
