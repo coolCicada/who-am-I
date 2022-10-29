@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-button @click="add" style="position: fixed; top: 20px; right: 20px; z-index: 999;" type="success" icon="el-icon-plus" circle></el-button>
+    <el-button @click="add" style="position: fixed; top: 10px; right: 10px; z-index: 999;" type="success" icon="el-icon-plus" circle></el-button>
     <KeepAlive :include="keepList">
       <router-view v-if="$route.meta && $route.meta.keepAlive"></router-view>
     </KeepAlive>
