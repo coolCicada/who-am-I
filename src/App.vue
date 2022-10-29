@@ -4,7 +4,7 @@
     <KeepAlive :include="keepList">
       <router-view v-if="$route.meta && $route.meta.keepAlive"></router-view>
     </KeepAlive>
-    <router-view v-if="!$route.meta || !$route.meta.keepAlive"></router-view>
+    <router-view :key="$route.fullPath" v-if="!$route.meta || !$route.meta.keepAlive"></router-view>
   </div>
 </template>
 
