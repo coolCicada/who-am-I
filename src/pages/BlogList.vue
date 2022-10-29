@@ -11,12 +11,11 @@
           :key="item.id"
           class="article"
         >
-          <div class="title">{{ item.title ? item.title : '省略' }}</div>
-          <div
-            class="content" 
-            @click="toDetail(item.id)"
-          >
-            {{ item.desc }}
+          <div @click="toDetail(item.id)">
+            <div class="title">{{ item.title ? item.title : '省略' }}</div>
+            <div class="content">
+              {{ item.desc }}
+            </div>
           </div>
           <div class="operators">
             <Button
@@ -99,10 +98,8 @@ function toEdit(id: string) {
     flex: 1;
     .article {
       position: relative;
-      border-top: 1px solid gainsboro;
       margin: 20px auto;
       box-sizing: border-box;
-      padding: 20px;
       .title {
         font-size: 2em;
         margin-bottom: 20px;
@@ -119,13 +116,19 @@ function toEdit(id: string) {
   
   @media screen and (max-width:500px) {
     .article {
-      width: 100%;
+      width: 95%;
+      border: 1px solid ghostwhite;
+      border-radius: 25px;
+      padding: 10px 15px;
+      background-color: white;
     }
   }
 
   @media screen and (min-width:500px) {
     .article {
       max-width: 800px;
+      border-top: 1px solid gainsboro;
+      padding: 20px;
     }
   }
 }
