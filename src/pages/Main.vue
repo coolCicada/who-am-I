@@ -53,6 +53,7 @@ html, body {
 }
 
 #app {
+  background-color: ghostwhite;
   box-sizing: border-box;
   min-height: 100vh;
   position: relative;
@@ -93,7 +94,7 @@ html, body {
         justify-content: center;
         flex-wrap: wrap;
         li {
-          width: 200px;
+          width: 150px;
           height: 80px;
           display: flex;
           flex-direction: column;
