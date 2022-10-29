@@ -50,6 +50,8 @@ const output = computed(() => marked(input.value.content))
 
 const id = ref(useRoute().params.id);
 
+console.log('useRoute', useRoute())
+
 async function getBolgDetail() {
   const { data, error } = await getOneBlog(id.value);
   if (!error && data) {
