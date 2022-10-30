@@ -1,6 +1,7 @@
 <template>
-  <div>
-    <el-button @click="add" style="position: fixed; top: 10px; right: 10px; z-index: 999;" type="success" icon="el-icon-plus" circle></el-button>
+  <div class="main-container">
+    <el-button @click="add" style="position: fixed; bottom: 60px; right: 10px; z-index: 999;" type="success" icon="el-icon-plus" circle></el-button>
+    <el-button @click="toFirstPage" style="position: fixed; bottom: 10px; right: 10px; z-index: 999;" type="success" icon="el-icon-s-home" circle></el-button>
     <KeepAlive :include="keepList">
       <router-view v-if="$route.meta && $route.meta.keepAlive"></router-view>
     </KeepAlive>
@@ -19,15 +20,20 @@ export default {
   setup() {
     const keepList: string[] = ['Main'];
     const router = useRouter();
-    const add = () => {
+    function add() {
       router.push({ name: 'BlogAdd' })
     }
-    return { keepList, add };
+
+    function toFirstPage() {
+      router.push({ name: 'Main' })
+    }
+
+    return { keepList, add, toFirstPage };
   }
 }
 </script>
 
-<style>
+<style lang="scss">
 body, html, ul {
   margin: 0;
   padding: 0;
