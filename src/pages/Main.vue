@@ -8,20 +8,8 @@
       <div class="info">
         <h2 class="title">社交主页</h2>
         <ul>
-          <li>
-            <a target="_blank" href="https://juejin.cn/user/835284566556014">掘金</a>
-          </li>
-          <li>
-            <a target="_blank" href="https://github.com/coolCicada">github</a>
-          </li>
-          <li>
-            <a target="_blank" href="https://leetcode.cn/u/lcls/">leetcode</a>
-          </li>
-          <li>
-            <a target="_blank" href="http://www.lssl.work/">知识共建网站</a>
-          </li>
-          <li>
-            <a target="_blank" href="https://www.npmjs.com/~coolcicada">npm</a>
+          <li v-for="item in otherPages.list" :key="item.url">
+            <a target="_blank" :href="item.url">{{ item.name }}</a>
           </li>
         </ul>
         <h2 class="title">
@@ -35,7 +23,8 @@
 </template>
 
 <script setup lang="ts">
-import { onActivated } from 'vue';
+import { onActivated, ref } from 'vue';
+import { getOtherPageListApi } from '@/api/otherPage';
 import BlogList from '@/pages/BlogList.vue'
 import Footer from '@/components/Footer.vue';
 
@@ -43,6 +32,14 @@ onActivated(() => {
   document.body.scrollTop = Number(localStorage.getItem('scrollTop'));
 })
 
+let otherPages = ref({ total: 0, list: [] as any });
+async function getOtherPageList(params: any) {
+  const { error, data } = await getOtherPageListApi({ params });
+  if (!error && data) {
+    otherPages.value = data;
+  }
+}
+getOtherPageList({});
 </script>
 
 <style lang="scss" scoped>
