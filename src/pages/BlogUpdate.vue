@@ -35,7 +35,7 @@ import { marked } from 'marked'
 import { debounce } from 'lodash-es'
 import { ref, computed } from 'vue'
 import { Button, Message, Form, Input, FormItem, Dialog } from 'element-ui';
-import { useRoute } from '@/utils/vueApi';
+import { useRoute, useRouter } from '@/utils/vueApi';
 import { getOneBlog, saveOneBlog } from '@/api/blog';
 
 let dialogTableVisible = ref(false);
@@ -49,8 +49,6 @@ const input = ref({
 const output = computed(() => marked(input.value.content))
 
 const id = ref(useRoute().params.id);
-
-console.log('useRoute', useRoute())
 
 async function getBolgDetail() {
   const { data, error } = await getOneBlog(id.value);
@@ -89,12 +87,22 @@ function validate() {
   })
 }
 
+const router = useRouter();
+
 async function save() {
   await validate();
   try {
     const { error, data } = await saveOneBlog({ id: id.value, ...input.value });
     if (!error && data) {
       Message({ type: 'success', message: '保存成功' });
+      if (!id.value) {
+        router.replace({
+          name: 'BlogUpdate',
+          params: {
+            id: data.id,
+          },
+        });
+      }
     }
   } finally {
     dialogTableVisible.value = false;
@@ -133,13 +141,15 @@ function tabFunc(e: any) {
       height: 60px;
       outline: none;
       border: none;
-      padding: 0 10px;
+      padding: 0 60px 0 10px;
       font-size: 2em;
+      box-sizing: border-box;
+      width: 100%;
     }
     .my-button {
       height: 35px;
       position: absolute;
-      right: 70px;
+      right: 10px;
       top: 0;
       bottom: 0;
       margin: auto 0;
