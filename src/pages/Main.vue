@@ -28,9 +28,9 @@
           文章列表
         </h2>
         <BlogList />
-        <Footer />
       </div>
     </div>
+    <Footer style="position: absolute; bottom: 0;"/>
   </div>
 </template>
 
@@ -56,6 +56,7 @@ html, body {
   background-color: ghostwhite;
   box-sizing: border-box;
   min-height: 100vh;
+  padding-bottom: 200px;
   position: relative;
   .header {
     height: 20px;
