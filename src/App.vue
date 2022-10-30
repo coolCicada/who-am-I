@@ -1,21 +1,40 @@
 <template>
   <div class="main-container">
-    <el-button @click="add" style="position: fixed; bottom: 60px; right: 10px; z-index: 999;" type="success" icon="el-icon-plus" circle></el-button>
-    <el-button @click="toFirstPage" style="position: fixed; bottom: 10px; right: 10px; z-index: 999;" type="success" icon="el-icon-s-home" circle></el-button>
+    <Button @click="login" style="position: fixed; bottom: 110px; right: 10px; z-index: 999;" type="success" icon="el-icon-user-solid" circle></Button>
+    <Button @click="add" style="position: fixed; bottom: 60px; right: 10px; z-index: 999;" type="success" icon="el-icon-plus" circle></Button>
+    <Button @click="toFirstPage" style="position: fixed; bottom: 10px; right: 10px; z-index: 999;" type="success" icon="el-icon-s-home" circle></Button>
     <KeepAlive :include="keepList">
       <router-view v-if="$route.meta && $route.meta.keepAlive"></router-view>
     </KeepAlive>
     <router-view :key="$route.fullPath" v-if="!$route.meta || !$route.meta.keepAlive"></router-view>
+    <Dialog title="登录信息" :visible.sync="dialogTableVisible">
+      <Form :rules="rules" ref="formRef" :model="input" label-width="80px">
+        <FormItem prop="name" label="姓名">
+          <Input v-model="input.name"></Input>
+        </FormItem>
+        <FormItem prop="password" label="密码">
+          <Input v-model="input.password"></Input>
+        </FormItem>
+      </Form>
+      <template #footer>
+        <Button @click="save">确认</Button>
+      </template>
+    </Dialog>
   </div>
 </template>
 
 <script lang="ts">
-import { Button } from 'element-ui';
+import { Button, Form, FormItem, Input, Dialog } from 'element-ui';
 import { useRouter } from '@/utils/vueApi';
+import { ref } from 'vue';
 
 export default {
   components: {
-    [Button.name]: Button,
+    Button,
+    FormItem,
+    Input,
+    Dialog,
+    Form,
   },
   setup() {
     const keepList: string[] = ['Main'];
@@ -28,7 +47,29 @@ export default {
       router.push({ name: 'Main' })
     }
 
-    return { keepList, add, toFirstPage };
+
+    let dialogTableVisible = ref(false);
+    const input = ref({
+      name: '',
+      password: '',
+    });
+    const rules = {
+      name: [
+        { required: true, message: '昵称不能为空', trigger: ['blur', 'change'] }
+      ],
+      password: [
+        { required: true, message: '密码不能为空', trigger: ['blur', 'change'] }
+      ]
+    }
+    function login() {
+      dialogTableVisible.value = true;
+    }
+
+    function save() {
+      console.log('save')
+    }
+
+    return { keepList, add, toFirstPage, login, dialogTableVisible, input, rules, save };
   }
 }
 </script>
