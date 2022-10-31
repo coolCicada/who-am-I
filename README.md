@@ -1,5 +1,36 @@
 # who-am
+## 自动化部署脚本
 
+```shell
+#!/bin/bash
+set -o errexit
+#更新仓库
+cd ./who-am-I
+git pull || exit&& \
+npm install && \
+npm run build && \
+
+rm -rf /home/mywebsite/dist && \
+cp -r dist /home/mywebsite && \
+
+echo "------update code over -----"
+echo "------start build-------"
+```
+
+# 打镜像
+docker build -t web /home/mywebsite/ \
+
+# 获取之前的容器
+container=`docker ps | grep "80->80" | awk '{print $1}'`
+
+if [ -z "$container" ]
+then
+        echo "没有运行中的server容器" && \
+        docker run -d -p 80:80 web
+else
+        docker stop "$container" && \
+        docker run -d -p 80:80 web
+fi
 
 
 
