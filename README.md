@@ -15,7 +15,6 @@ cp -r dist /home/mywebsite && \
 
 echo "------update code over -----"
 echo "------start build-------"
-```
 
 # 打镜像
 docker build -t web /home/mywebsite/ \
@@ -31,8 +30,7 @@ else
         docker stop "$container" && \
         docker run -d -p 80:80 web
 fi
-
-
+```
 
 ## 传输
     put /path/filename(本地主机) /path/filename(远端主机)
