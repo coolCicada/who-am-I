@@ -3,10 +3,9 @@
 
 ```shell
 #!/bin/bash
-set -e
 #更新仓库
 cd ./who-am-I
-git pull && \
+git pull || exit && \
 npm install && \
 npm run build && \
 
