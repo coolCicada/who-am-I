@@ -20,13 +20,14 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { Button, Message, Form, FormItem, Input, Dialog } from 'element-ui';
-import { useRouter } from '@/utils/vueApi';
+import { useRouter, useStore } from '@/utils/vueApi';
 import { loginApi } from '@/api/login';
-import useLogin from '@/hooks/useLogin';
 
-const { isLogin, changeLoginStatus } = useLogin();
+const store = useStore();
+store.dispatch('initUserType');
+const isLogin = computed(() => store.state.userType === 1);
 
 const router = useRouter();
 function add() {
@@ -70,7 +71,7 @@ async function save() {
     Message({ type: 'success', message: '登录成功' });
     dialogTableVisible.value = false;
     localStorage.setItem("token", data.token);
-    changeLoginStatus(true);
+    store.commit('setUserType', 1);
   } else {
     Message({ type: 'error', message: error.msg });
   }

@@ -19,6 +19,7 @@
           </div>
           <div class="operators">
             <Button
+              v-if="isLogin"
               type="text"
               @click="toEdit(item.id)"
             >
@@ -32,11 +33,14 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { Button } from 'element-ui';
 import { getBlogList } from '@/api/blog';
 import ScrollLoad from '@/components/ScrollLoad.vue';
-import { useRouter } from '@/utils/vueApi';
+import { useRouter, useStore } from '@/utils/vueApi';
+
+const store = useStore();
+const isLogin = computed(() => store.state.userType === 1);
 
 const router = useRouter();
 
@@ -106,7 +110,7 @@ function toEdit(id: string) {
       }
 
       .operators {
-        height: 20;
+        height: 30px;
         display: flex;
         align-items: center;
         justify-content: flex-end;
