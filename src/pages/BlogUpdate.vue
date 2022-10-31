@@ -91,21 +91,21 @@ const router = useRouter();
 
 async function save() {
   await validate();
-  try {
-    const { error, data } = await saveOneBlog({ id: id.value, ...input.value });
-    if (!error && data) {
-      Message({ type: 'success', message: '保存成功' });
-      if (!id.value) {
-        router.replace({
-          name: 'BlogUpdate',
-          params: {
-            id: data.id,
-          },
-        });
-      }
-    }
-  } finally {
+  const { error, data } = await saveOneBlog({ id: id.value, ...input.value });
+  if (!error && data) {
+    Message({ type: 'success', message: '保存成功' });
     dialogTableVisible.value = false;
+    if (!id.value) {
+      router.replace({
+        name: 'BlogUpdate',
+        params: {
+          id: data.id,
+        },
+      });
+    }
+    getBolgDetail();
+  } else {
+    Message({ type: 'error', message: error.msg });
   }
 }
 
